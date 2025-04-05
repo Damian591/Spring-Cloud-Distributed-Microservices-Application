@@ -36,4 +36,18 @@ Ensure you have the following tools installed:
 - 🔧 **Maven**
 - 🌿 **Git**
 
+---
+
+## 📊 Service Configuration
+
+Below is the configuration table for each project in the system:
+
+| 🧩 Service Name   | 🔌 Port(s)      | ⏱️ Startup Order |
+|------------------|----------------|------------------|
+| `config-server`  | 8888           | 1                |
+| `eureka-server`  | 8761           | 2                |
+| `pirmas-darbas`  | 8081, 8082     | 3                |
+| `loadBalancer`   | 8080           | 4                |
+| `git-repo`       | –              | –                |
+
 
