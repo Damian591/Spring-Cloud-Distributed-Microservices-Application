@@ -1,27 +1,39 @@
-# Spring-Cloud-Distributed-Microservices-Application
-This repository contains the implementation of a distributed microservices system developed for Homework 2 of the Distributed Systems course at Vilnius Gediminas Technical University.
+# 📦 Spring Cloud Distributed Microservices Application
 
-📘 Project Overview
-This project demonstrates a microservices architecture using Spring Cloud, with a focus on service discovery, centralized configuration, and client-side load balancing. The system consists of the following modules:
+This repository contains the implementation of a distributed microservices system developed for **Homework 2** of the *Distributed Systems* course at **Vilnius Gediminas Technical University**.
 
-discovery-service
-A Eureka Server that handles service registration and discovery for all microservices in the system.
+---
 
-config-server
-A Spring Cloud Config Server that provides centralized and version-controlled configuration for other services.
+## 📘 Project Overview
 
-microservice
-A service adapted from Homework 1, used for managing library-related operations. Multiple instances of this microservice can be launched to demonstrate load balancing.
+This project demonstrates a **Spring Cloud**-based microservices architecture, focusing on:
 
-load-balancer
-A dedicated client-side load balancer application that uses Spring Cloud OpenFeign (@FeignClient) to make requests to multiple running instances of the microservice. Eureka handles service discovery, and Feign ensures load is distributed across instances using round-robin or other built-in strategies.
+- **Service discovery**
+- **Centralized configuration**
+- **Client-side load balancing**
 
-🚀 Prerequisites
-Make sure the following tools are installed on your system:
+The system is composed of the following modules:
 
-Java 21
+### 🔍 `discovery-service`
+A **Netflix Eureka Server** responsible for service registration and discovery across the distributed system.
 
-Maven
+### ⚙️ `config-server`
+A **Spring Cloud Config Server** that offers centralized, externalized, and version-controlled configuration for all services in the ecosystem.
 
-Git
+### 📚 `microservice`
+A library management service, adapted from **Homework 1**, designed to support multiple running instances for testing load balancing behavior.
+
+### ⚖️ `load-balancer`
+A client-side load balancing service using **Spring Cloud OpenFeign** (`@FeignClient`). It communicates with multiple instances of the `microservice`, automatically distributing requests using built-in load balancing strategies like round-robin, with service resolution handled by Eureka.
+
+---
+
+## 🚀 Prerequisites
+
+Ensure you have the following tools installed:
+
+- ☕ **Java 21**
+- 🔧 **Maven**
+- 🌿 **Git**
+
 
