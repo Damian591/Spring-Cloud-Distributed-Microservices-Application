@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-customer-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="CUSTOMER">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(100)" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_name" type="varchar(100)" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="varchar(100)" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="phone_number" type="varchar(25)" >
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="load-customer-data" author="damian.grigorovic333@gmail.com">
+        <loadData separator=";" tableName="CUSTOMER" file="customer.csv"
+                  relativeToChangelogFile="true"/>
+    </changeSet>
+    <changeSet id="create-account-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="ACCOUNT">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="account_number" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="numeric(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="load-account-data" author="damian.grigorovic333@gmail.com">
+        <loadData separator=";" tableName="ACCOUNT" file="account.csv"
+                  relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="create-customer-account-table" author="damian.grigorovic333@gmail.com">
+       <createTable tableName="CUSTOMER_ACCOUNT">
+           <column name="customer_id" type="bigint">
+               <constraints referencedTableName="CUSTOMER" referencedColumnNames="id" nullable="false"
+                            foreignKeyName="CustomerAccountCustomerFk"/>
+           </column>
+           <column name="account_id" type="bigint">
+               <constraints referencedTableName="ACCOUNT" referencedColumnNames="id" nullable="false"
+                            foreignKeyName="CustomerAccountAccountFk"/>
+           </column>
+       </createTable>
+    </changeSet>
+
+    <changeSet id="load-customer-account-relation-data" author="damian.grigorovic333@gmail.com">
+        <loadData tableName="CUSTOMER_ACCOUNT" file="customer-account.csv" separator=";" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="create-product-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="PRODUCT">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_name" type="varchar(100)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="best_before" type="varchar(25)" >
+                <constraints nullable="true"/>
+             </column>
+            <column name="price" type="numeric(10,2)" >
+                <constraints nullable="false"/>
+        </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Duomenų užkrovimas į PRODUCT -->
+    <changeSet id="load-product-data" author="damian.grigorovic333@gmail.com">
+        <loadData separator=";" tableName="PRODUCT" file="product.csv" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="create-order-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="CUSTORDER">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_date" type="varchar(25)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_amount" type="numeric(10,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Duomenų užkrovimas į ORDER -->
+    <changeSet id="load-order-data" author="damian.grigorovic333@gmail.com">
+        <loadData separator=";" tableName="CUSTORDER" file="order.csv" relativeToChangelogFile="true"/>
+    </changeSet>
+
+
+    <changeSet id="create-category-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="CATEGORY">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="load-category-data" author="damian.grigorovic333@gmail.com">
+        <loadData separator=";" tableName="CATEGORY" file="category.csv" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="create-order-customer-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="ORDER_CUSTOMER">
+            <column name="order_id" type="bigint">
+                <constraints referencedTableName="CUSTORDER" referencedColumnNames="id" nullable="false"
+                             foreignKeyName="OrderCustomerOrderFk"/>
+            </column>
+            <column name="customer_id" type="bigint">
+                <constraints referencedTableName="CUSTOMER" referencedColumnNames="id" nullable="false"
+                             foreignKeyName="OrderCustomerCustomerFk"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="load-order-customer-relation-data" author="damian.grigorovic333@gmail.com">
+        <loadData tableName="ORDER_CUSTOMER" file="order-customer.csv" separator=";" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="create-order-product-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="ORDER_PRODUCT">
+            <column name="order_id" type="bigint">
+                <constraints referencedTableName="CUSTORDER" referencedColumnNames="id" nullable="false"
+                             foreignKeyName="OrderProductOrderFk"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints referencedTableName="PRODUCT" referencedColumnNames="id" nullable="false"
+                             foreignKeyName="OrderProductProduct"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="load-order-product-relation-data" author="damian.grigorovic333@gmail.com">
+        <loadData tableName="ORDER_PRODUCT" file="order-product.csv" separator=";" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="create-product-category-table" author="damian.grigorovic333@gmail.com">
+        <createTable tableName="PRODUCT_CATEGORY">
+            <column name="product_id" type="bigint">
+                <constraints referencedTableName="PRODUCT" referencedColumnNames="id" nullable="false"
+                             foreignKeyName="ProductCategoryProductFk"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints referencedTableName="CATEGORY" referencedColumnNames="id" nullable="false"
+                             foreignKeyName="ProductCategoryCategoryFk"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="load-product-category-relation-data" author="damian.grigorovic333@gmail.com">
+        <loadData tableName="PRODUCT_CATEGORY" file="product-category.csv" separator=";" relativeToChangelogFile="true"/>
+    </changeSet>
+
+
+</databaseChangeLog>
